@@ -1,0 +1,7 @@
+[MASTER]
+load-plugins=pylint_django, pylint_common
+
+
+[MESSAGES CONTROL]
+# C0111 Missing docstring
+disable=C0111

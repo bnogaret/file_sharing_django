@@ -1,0 +1,12 @@
+# Inspired by https://github.com/github/gitignore/blob/master/Python.gitignore
+
+# Python stuff
+__pycache__/
+*.py[cod]
+
+# Django stuff
+local_settings.py
+
+# IDE stuff
+.vscode
+
