@@ -1,5 +1,11 @@
 {% extends "file_sharing_app/base.html" %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+        <p><a href="{% url 'file_sharing_app:logout' %}">Logout</a></p>
+    {% else %}
+        <p>Welcome, new user. Please <a href="{% url 'file_sharing_app:login' %}">log in</a> or <a href="{% url 'file_sharing_app:sign_up' %}">sign up</a>.</p>
+    {% endif %}
     <h1>Welcome to my app<h1>
 {% endblock content %}

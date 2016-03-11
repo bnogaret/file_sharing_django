@@ -1,0 +1,10 @@
+{% extends "file_sharing_app/base.html" %}
+
+{% block content %}
+    <h1>Sign up</h1>
+    <form action="{% url 'file_sharing_app:sign_up' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock content %}

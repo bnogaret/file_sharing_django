@@ -125,4 +125,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# User System
+# https://docs.djangoproject.com/en/1.9/topics/auth/default/
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'file_sharing_app:login'
+
+
 from .local_settings import *
