@@ -3,6 +3,10 @@
 {% block content %}
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+        {% if user.last_login %}
+        <p>Last login: {{ user.last_login }}</p>
+        {% endif %}
+        <p>You are a user since {{ user.date_joined | timesince }}</p>
         <p><a href="{% url 'file_sharing_app:logout' %}">Logout</a></p>
     {% else %}
         <p>Welcome, new user. Please <a href="{% url 'file_sharing_app:login' %}">log in</a> or <a href="{% url 'file_sharing_app:sign_up' %}">sign up</a>.</p>
