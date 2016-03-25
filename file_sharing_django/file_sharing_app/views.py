@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from . forms import UserSignupForm
+from . models import Group
 
 # Create your views here.
 
@@ -27,3 +29,12 @@ def signup(request):
         form = UserSignupForm()
 
     return render(request, 'file_sharing_app/sign_up.html', {'form': form})
+
+@login_required()
+def group(request):
+    user_group = Group.objects.filter(creator=request.user)
+    shared_group = Group.objects.filter(members=request.user)
+    return render(request, 'file_sharing_app/group.html', {
+        'user_group': user_group,
+        'shared_group': shared_group
+    })

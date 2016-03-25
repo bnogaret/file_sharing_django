@@ -1,0 +1,24 @@
+{% extends "file_sharing_app/base.html" %}
+
+{% block content %}
+    <h1>My groups</h1>
+    {% if user_group %}
+        <ul>
+        {% for group in user_group %}
+            <li>{{ group.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't created any group.</p>
+    {% endif %}
+    <h1>Groups shared with me</h1>
+    {% if shared_group %}
+        <ul>
+        {% for group in shared_group %}
+            <li>{{ group.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't any group shared with you.</p>
+    {% endif %}
+{% endblock content %}

@@ -7,7 +7,8 @@ app_name = 'file_sharing_app'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'login/', auth_views.login, name='login'),
-    url(r'logout/', auth_views.logout_then_login, name='logout'),
-    url(r'signup/', views.signup, name='sign_up')
+    url(r'^signup/$', views.signup, name='sign_up'),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout_then_login, name='logout'),
+    url(r'^group/$', views.group, name='group')
 ]
