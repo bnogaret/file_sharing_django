@@ -5,7 +5,7 @@
     {% if user_group %}
         <ul>
         {% for group in user_group %}
-            <li>{{ group.name }}</li>
+            <li><a href="{% url 'file_sharing_app:group_detail' group.id %}">{{ group.name }}</a></li>
         {% endfor %}
         </ul>
     {% else %}
@@ -15,7 +15,7 @@
     {% if shared_group %}
         <ul>
         {% for group in shared_group %}
-            <li>{{ group.name }}</li>
+            <li><a href="{% url 'file_sharing_app:group_detail' group.id %}">{{ group.name }}</a></li>
         {% endfor %}
         </ul>
     {% else %}

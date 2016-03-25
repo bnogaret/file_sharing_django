@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -38,3 +38,11 @@ def group(request):
         'user_group': user_group,
         'shared_group': shared_group
     })
+
+@login_required()
+def group_detail(request, group_id):
+    group = get_object_or_404(Group, pk=group_id)
+    return render(request, 'file_sharing_app/group_detail.html', {
+        'group': group,
+    })
+

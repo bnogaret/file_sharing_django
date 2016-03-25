@@ -1,0 +1,27 @@
+{% extends "file_sharing_app/base.html" %}
+
+{% block content %}
+    <h1>Creator: {{ group.creator.username }}</h1>
+    <h1>Date creation: {{ group.date_creation | timesince }}</h1>
+    <h1>Last modification of the group: {{group.date_last_modification | timesince }}
+    {% if group.members %}
+    <h1>Member of the group:</h1>
+        <ul>
+        {% for member in group.members.all %}
+            <li>{{ member.username }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No member.</p>
+    {% endif %}
+    <h1>Files</h1>
+    {% if group.groupfile_set %}
+        <ul>
+        {% for file in group.groupfile_set.all %}
+            <li><a href="{{ file.file.url }}">{{ file.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No file.</p>
+    {% endif %}
+{% endblock content %}
