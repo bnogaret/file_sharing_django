@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -120,10 +121,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) and media files
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '*****'
 
 # User System
 # https://docs.djangoproject.com/en/1.9/topics/auth/default/
@@ -131,5 +133,19 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'file_sharing_app:login'
 
+# Django-storages app (v1.4) for Amazon S3 (for media)
+# https://django-storages.readthedocs.org/en/latest/index.html
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+AWS_HEADERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'Cache-Control': 'max-age=94608000',
+}
+
+AWS_ACCESS_KEY_ID = '*****'
+AWS_SECRET_ACCESS_KEY = '*****'
+AWS_STORAGE_BUCKET_NAME = '*****'
+AWS_S3_CUSTOM_DOMAIN = '*****'
 
 from .local_settings import *
