@@ -25,10 +25,10 @@ def group_file_name(instance, filename):
 
 class GroupFile(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     file = models.FileField(upload_to=group_file_name)
 
     def __str__(self):
-        return self.name
+        return self.title
 
