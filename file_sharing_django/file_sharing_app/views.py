@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from . forms import UserSignupForm
+from . forms import UserSignupForm, GroupFileForm, GroupAddMemberForm
 from . models import Group
 
 # Create your views here.
@@ -41,8 +41,26 @@ def group(request):
 
 @login_required()
 def group_detail(request, group_id):
-    group = get_object_or_404(Group, pk=group_id)
+    grp = get_object_or_404(Group, pk=group_id)
+    if request.method == 'POST':
+        if 'group_file_submit' in request.POST:
+            group_file_form = GroupFileForm(request.POST, request.FILES)
+            group_add_member_form = GroupAddMemberForm(initial={'group':grp.id})
+            if group_file_form.is_valid():
+                new_groupfile = group_file_form.save()
+                return HttpResponseRedirect(reverse('file_sharing_app:group_detail', args=(new_groupfile.group.id,)))
+        elif 'group_add_member_submit' in request.POST:
+            group_file_form = GroupFileForm(initial={'group':grp.id})
+            group_add_member_form = GroupAddMemberForm(request.POST)
+            if group_add_member_form.is_valid():
+                new_groupmember = group_add_member_form.save()
+                return HttpResponseRedirect(reverse('file_sharing_app:group_detail', args=(new_groupmember.group.id,)))
+    else:
+        group_file_form = GroupFileForm(initial={'group':grp.id})
+        group_add_member_form = GroupAddMemberForm(initial={'group':grp.id})
     return render(request, 'file_sharing_app/group_detail.html', {
-        'group': group,
+        'group': grp,
+        'group_file_form': group_file_form,
+        'group_add_member_form': group_add_member_form
     })
 
