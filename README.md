@@ -28,7 +28,7 @@ I advice you to use a virtualenv to install the app ([for more information](http
 
 Python 3.4 and later directly include pip, a python package manager. From inside the repository, run:
 
-    `pip install -r requirements.txt`
+    pip install -r requirements.txt
 
 Some of the packages installed by this command are not necessary to run file_sharing_django (such as pylint, pylint-django and pylint-common that are for code analysis). You can ignore them and install manually the essential packages.
 
