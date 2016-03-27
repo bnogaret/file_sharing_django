@@ -6,8 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .. forms import UserSignupForm
 
-# Create your tests here.
-
 class UserSignupFormTests(TestCase):
     def setUp(self):
         User.objects.create_user("dummy", "test.test@test.com", "test")
