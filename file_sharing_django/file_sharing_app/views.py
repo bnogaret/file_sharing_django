@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from . forms import UserSignupForm, GroupFileForm, GroupAddMemberForm
+from . forms import UserSignupForm, AddGroupForm, GroupFileForm, GroupAddMemberForm
 from . models import Group
 
 # Create your views here.
@@ -32,11 +32,21 @@ def signup(request):
 
 @login_required()
 def group(request):
+    if request.method == 'POST':
+        add_group_form = AddGroupForm(request.POST)
+        if add_group_form.is_valid():
+            new_group = add_group_form.save(commit=False)
+            new_group.creator = request.user
+            new_group.save()
+            return HttpResponseRedirect(reverse('file_sharing_app:group'))
+
+    add_group_form = AddGroupForm()
     user_group = Group.objects.filter(creator=request.user)
     shared_group = Group.objects.filter(members=request.user)
     return render(request, 'file_sharing_app/group.html', {
         'user_group': user_group,
-        'shared_group': shared_group
+        'shared_group': shared_group,
+        'add_group_form': AddGroupForm
     })
 
 @login_required()

@@ -8,20 +8,33 @@
                 <h2 class="mdl-card__title-text">My groups</h2>
             </div>
             <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-            {% if user_group %}
-            <ul class="demo-list-icon mdl-list">
-                {% for group in user_group %}
-                    <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content">
-                            <i class="fa fa-users mdl-list__item-icon"></i>
-                            <a href="{% url 'file_sharing_app:group_detail' group.id %}">{{ group.name }}</a>
-                        </span>
-                    </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <p>You haven't created any group.</p>
-            {% endif %}
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    {% if user_group %}
+                    <ul class="demo-list-icon mdl-list">
+                        {% for group in user_group %}
+                            <li class="mdl-list__item">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="fa fa-users mdl-list__item-icon"></i>
+                                    <a href="{% url 'file_sharing_app:group_detail' group.id %}">{{ group.name }}</a>
+                                </span>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>You haven't created any group.</p>
+                    {% endif %}
+                </div>
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <h4>Add a group</h4>
+                    <form action="{% url 'file_sharing_app:group' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label class="mdl-textfield__label" for="{{ add_group_form.name.id_for_label }}">{{ add_group_form.name.html_name }}</label>
+                            {{ add_group_form.name }}
+                        </div>
+                        <button type="submit" name="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add the group</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

@@ -1,14 +1,9 @@
-import logging
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext as _
 
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
-
-from .models import GroupFile, GroupMembership
+from .models import GroupFile, GroupMembership, Group
 
 class UserSignupForm(UserCreationForm):
     """
@@ -27,14 +22,22 @@ class UserSignupForm(UserCreationForm):
             user.save()
         return user
 
+class AddGroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ('name',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'mdl-textfield__input'})
+        }
+
 class GroupFileForm(forms.ModelForm):
     class Meta:
         model = GroupFile
         fields = ('title', 'file', 'group')
         widgets = {
             'group': forms.HiddenInput(),
-            'title': forms.TextInput(attrs={'class':'mdl-textfield__input'}),
-            'file': forms.FileInput(attrs={'accept':".pdf,.odt,.tex,.docx,.doc"})
+            'title': forms.TextInput(attrs={'class': 'mdl-textfield__input'}),
+            'file': forms.FileInput(attrs={'accept': '.pdf,.odt,.tex,.docx,.doc'})
         }
 
 class GroupAddMemberForm(forms.ModelForm):
@@ -59,9 +62,6 @@ class GroupAddMemberForm(forms.ModelForm):
         cleaned_data = super(GroupAddMemberForm, self).clean()
         user = cleaned_data['member']
         group = cleaned_data['group']
-
-        logger.debug(user)
-        logger.debug(group)
 
         if user and group:
             # If both fields are valid so far
