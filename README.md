@@ -14,7 +14,7 @@ file_sharing_django is a small project to try / learn django.
 
 - [Python 3.5](https://www.python.org/): the language of choice
 - [Django 1.9](https://www.djangoproject.com/): Python web framework
-- [PostgreSQL 9.4](http://www.postgresql.org/): relational database, used to save django data (user account, sessions ...), files information
+- [PostgreSQL 9.4](http://www.postgresql.org/): relational database, used to save django data (user account, sessions ...), file information
 
 ### Client side and design
 
