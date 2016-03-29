@@ -80,7 +80,7 @@
                             <tbody>
                                 {% for file in group.groupfile_set.all %}
                                 <tr>
-                                    <td class="mdl-data-table__cell--non-numeric"><a href="{{ file.url }}">{{ file.title }}</a></td>
+                                    <td class="mdl-data-table__cell--non-numeric"><a href="{{ file.file.url }}">{{ file.title }}</a></td>
                                     <td>{{ file.date_creation }}</td>
                                 </tr>
                                 {% endfor %}
