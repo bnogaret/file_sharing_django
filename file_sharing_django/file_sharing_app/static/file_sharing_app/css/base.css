@@ -1,3 +1,35 @@
-h1 {
-    color: blue;
+main.mdl-layout__content {
+    position: relative;
+    top: 64px;
+    width: 100%;
+    padding-bottom: 68px;
+}
+
+footer.mdl-mini-footer {
+    padding: 16px;
+}
+
+.mdl-mini-footer__social-btn a {
+    color: inherit;
+}
+
+.mdl-data-table.mdl-data-table__main {
+    min-width: 600px;
+}
+
+
+.mdl-textfield {
+    width: 100%;
+}
+
+.mdl-textfield .mdl-textfield__input, .mdl-textfield .mdl-textfield__label {
+    font-size: 20px;
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label, .mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
+	font-size: 16px;
+}
+
+.section-margin {
+    margin-bottom: 48px;
 }

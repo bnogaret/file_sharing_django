@@ -1,9 +1,9 @@
+import logging
+
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext as _
-
-import logging
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -32,11 +32,14 @@ class GroupFileForm(forms.ModelForm):
         model = GroupFile
         fields = ('title', 'file', 'group')
         widgets = {
-            'group': forms.HiddenInput()
+            'group': forms.HiddenInput(),
+            'title': forms.TextInput(attrs={'class':'mdl-textfield__input'}),
+            'file': forms.FileInput(attrs={'accept':".pdf,.odt,.tex,.docx,.doc"})
         }
 
 class GroupAddMemberForm(forms.ModelForm):
     member = forms.CharField()
+    member.widget = forms.TextInput(attrs={'class':'mdl-textfield__input'})
 
     class Meta:
         model = GroupMembership

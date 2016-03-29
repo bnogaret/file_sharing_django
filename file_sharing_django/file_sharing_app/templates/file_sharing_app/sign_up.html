@@ -1,10 +1,29 @@
 {% extends "file_sharing_app/base.html" %}
 
 {% block content %}
-    <h1>Sign up</h1>
-    <form action="{% url 'file_sharing_app:sign_up' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit" />
-    </form>
+<div class="mdl-layout__tab-panel is-active" id="overview">
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp section-margin">
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                <h2 class="mdl-card__title-text">Sign up</h2>
+            </div>
+            <form method="post" action="{% url 'file_sharing_app:sign_up' %}">
+                <div class="mdl-card__supporting-text">
+                    <p>Ready for an extraordinary adventure?</p>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label class="mdl-textfield__label" for="{{ field.id_for_label }}">{{ field.html_name }}</label>
+                            <input class="mdl-textfield__input" maxlength="{{ field.field.max_length }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" type="{{ field.field.widget.input_type }}" />
+                        </div>
+                        {{ field.errors }}
+                    {% endfor %}
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Log in</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
 {% endblock content %}

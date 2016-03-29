@@ -18,6 +18,10 @@ file_sharing_django is a small project to try / learn django.
 
 ### Client side and design
 
+Very basic GUI (euphemism for "it's ugly").
+
+- [Material design lite 1.1.3](http://www.getmdl.io/index.html): the css / js framework for the interface. For index.html, I reuse the template "text-only" that can be found [here](http://www.getmdl.io/templates/text-only/index.html).
+
 ## Installation
 
 Install python 3.5 from [the website](https://www.python.org/downloads/release/python-351/). Make sure python is in the path environment.

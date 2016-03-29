@@ -1,42 +1,117 @@
 {% extends "file_sharing_app/base.html" %}
 
 {% block content %}
-    <h1>Creator: {{ group.creator.username }}</h1>
-    <h1>Group name: {{ group.name }}</h1>
-    <h1>Date creation: {{ group.date_creation | timesince }}</h1>
-    <h1>Last modification of the group: {{group.date_last_modification | timesince }}
-    {% if group.members %}
-    <h1>Member of the group:</h1>
-        <ul>
-        {% for member in group.members.all %}
-            <li>{{ member.username }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No member.</p>
-    {% endif %}
-    {% if user.username == group.creator.username %}
-    <h1>Add member</h1>
-    <form action="{% url 'file_sharing_app:group_detail' group.id %}" method="post">
-        {% csrf_token %}
-        {{ group_add_member_form }}
-        <input type="submit" name="group_add_member_submit" value="Submit" />
-    </form>
-    {% endif %}
-    <h1>Files</h1>
-    {% if group.groupfile_set %}
-        <ul>
-        {% for file in group.groupfile_set.all %}
-            <li><a href="{{ file.url }}">{{ file.title }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No file.</p>
-    {% endif %}
-    <h1>Upload a file</h1>
-    <form action="{% url 'file_sharing_app:group_detail' group.id %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ group_file_form }}
-        <input type="submit" name="group_file_submit" value="Submit" />
-    </form>
+<div class="mdl-layout__tab-panel is-active" id="overview">
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp section-margin">
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                <h2 class="mdl-card__title-text">Group: {{ group.name }}</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <h5>Creator: {{ group.creator.username }}</h5>
+                    <p>Date creation: {{ group.date_creation | timesince }}</p>
+                    <p>Last modification of the group: {{group.date_last_modification | timesince }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp section-margin">
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                <h2 class="mdl-card__title-text">Group members</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    {% if group.members %}
+                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-data-table__main">
+                            <thead>
+                                <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Member:</th>
+                                <th>Joined date:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for member in group.members.all %}
+                                <tr>
+                                    <td class="mdl-data-table__cell--non-numeric">{{ member.username }}</td>
+                                    <td>{{ member.date_joined }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No member.</p>
+                    {% endif %}
+                    <br/>
+                </div>
+                {% if user.username == group.creator.username %}
+                    <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                            <h4>Add a member</h4>
+                            <form action="{% url 'file_sharing_app:group_detail' group.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <label class="mdl-textfield__label" for="{{ group_add_member_form.member.id_for_label }}">{{ group_add_member_form.member.html_name }}</label>
+                                {{ group_add_member_form.member }}
+                            </div>
+                            {{ group_add_member_form.group }}
+                            <button type="submit" name="group_add_member_submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Log in</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp section-margin">
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+                <h2 class="mdl-card__title-text">Files</h2>
+            </div>
+            <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    {% if group.groupfile_set %}
+                        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp mdl-data-table__main">
+                            <thead>
+                                <tr>
+                                <th class="mdl-data-table__cell--non-numeric">File:</th>
+                                <th>Added:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for file in group.groupfile_set.all %}
+                                <tr>
+                                    <td class="mdl-data-table__cell--non-numeric"><a href="{{ file.url }}">{{ file.title }}</a></td>
+                                    <td>{{ file.date_creation }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No file.</p>
+                    {% endif %}
+                    <br/>
+                </div>
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                    <h4>Upload a file</h4>
+                    <form action="{% url 'file_sharing_app:group_detail' group.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label class="mdl-textfield__label" for="{{ group_file_form.title.id_for_label }}">{{ group_file_form.title.html_name }}</label>
+                            {{ group_file_form.title }}
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--file">
+                            <input class="mdl-textfield__input" placeholder="File" type="text" id="uploadFile" readonly/>
+                            <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file">
+                                <i class="fa fa-file"></i>
+                                {{ group_file_form.file }}
+                            </div>
+                        </div>
+                        {{ group_file_form.group }}
+                        <button type="submit" name="group_file_submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Log in</button>
+                    </form>
+                 </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock content %}
